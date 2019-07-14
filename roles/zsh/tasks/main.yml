@@ -1,0 +1,52 @@
+---
+
+- name: install zsh and required packages
+  apt:
+    name: ['cmake', 'gcc', 'g++', 'zsh', 'python-dev', 'python-pip']
+    state: present
+  tags: [ 'packages', 'zsh' ]
+
+- name: install psutil
+  pip:
+    name: psutil
+
+- name: set zsh as default shell
+  user:
+    name: "{{ ansible_user }}"
+    shell: /bin/zsh
+  tags: [ zsh' ]
+
+- name: install antigen and all config files
+  block:
+  - name: download antigen - plugin manager for zsh
+    get_url:
+      url: https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh
+      dest: '/home/{{ ansible_user }}/antigen.zsh'
+
+  - name: copy zsh aliases to home folder
+    copy:
+      src: .aliases
+      dest: '/home/{{ ansible_user }}/.aliases'
+      force: no
+
+  - name: copy zsh functions to home folder
+    copy:
+      src: .functions
+      dest: '/home/{{ ansible_user }}/.functions'
+      force: no
+
+  - name: copy zsh exports to home folder
+    copy:
+      src: .exports
+      dest: '/home/{{ ansible_user }}/.exports'
+      force: no
+
+  - name: copy .zshrc config to home folder
+    template:
+      src: .zshrc.j2
+      dest: '/home/{{ ansible_user }}/.zshrc'
+      force: no
+
+  tags: [ 'zsh' ]
+  become_user: '{{ ansible_user }}'
+  become: yes

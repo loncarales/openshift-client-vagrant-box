@@ -1,0 +1,24 @@
+---
+
+- name: OpenShift client essentials
+  hosts: openshift-client
+  become: yes
+
+  roles:
+    - role: common
+
+    - role: tmux
+      ansible_user: vagrant
+
+    - role: zsh
+      ansible_user: vagrant
+    
+    - role: docker-ce
+      ansible_user: vagrant
+      docker_compose_version: '1.24.1'
+
+    - role: java-zulu
+      java_major_version: 8
+
+    - role: openshift-client
+      oc_version: 3.11

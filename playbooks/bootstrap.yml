@@ -1,0 +1,14 @@
+---
+
+- name: Bootstrap server
+  hosts: openshift-client
+  gather_facts: no
+  become: yes
+
+  roles:
+    - role: robertdebock.bootstrap
+      bootstrap_user: vagrant
+
+  tasks:
+    - name: test connection
+      ping:

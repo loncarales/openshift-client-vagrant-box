@@ -1,0 +1,16 @@
+---
+
+- name: install tmux
+  apt:
+    name: 'tmux'
+    state: present
+  tags: [ 'packages', 'tmux' ]
+
+- name: install tmux configuration with system stat cpu load bar
+  copy:
+    src: .tmux.conf
+    dest: ~/.tmux.conf
+
+  tags: [ 'tmux' ]
+  become_user: "{{ ansible_user }}"
+  become: yes

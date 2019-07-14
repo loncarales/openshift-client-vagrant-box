@@ -1,0 +1,26 @@
+---
+
+- name: update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+  tags: [ 'packages' ]
+
+- name: add non free repo to sources list
+  apt_repository:
+    repo: '{{ item }}'
+    state: present
+  with_items:
+   - 'deb http://ftp2.de.debian.org/debian/ stretch main contrib non-free'
+   - 'deb-src http://ftp2.de.debian.org/debian/ stretch main contrib non-free'
+  tags: [ 'packages' ]
+
+- name: install some common packages
+  apt:
+    name: ['jq', 'git']
+    state: present
+  tags: [ 'packages' ]
+
+- name: set the timezone for the server to be UTC
+  timezone:
+    name: Europe/Berlin

@@ -1,0 +1,7 @@
+---
+# defaults file for java-zulu
+
+java_major_version: 8
+release_url_version_8: https://cdn.azul.com/zulu/bin/zulu8.38.0.13-ca-jdk8.0.212-linux_amd64.deb
+release_url_version_11: https://cdn.azul.com/zulu/bin/zulu11.31.11-ca-jdk11.0.3-linux_amd64.deb
+release_url_version_12: https://cdn.azul.com/zulu/bin/zulu12.2.3-ca-jdk12.0.1-linux_amd64.deb

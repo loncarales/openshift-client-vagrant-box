@@ -1,0 +1,35 @@
+---
+# tasks file for java-zulu
+
+- name: Check if java-zulu is installed
+  command: 'dpkg-query -W zulu-{{ java_major_version }}'
+  register: java_check_deb
+  failed_when: java_check_deb.rc > 1
+  changed_when: java_check_deb.rc == 1
+
+- name: Set up release url
+  set_fact:
+    release_url: >-
+      {{ vars['release_url_version_' + java_major_version|string] }}
+  when: java_check_deb.rc == 1
+
+- name: 'Download java from {{ release_url }}'
+  get_url:
+    url: '{{ release_url }}'
+    dest: /tmp/download-java-zulu.deb
+  register: file_downloaded
+  retries: 20
+  delay: 5
+  until: file_downloaded is succeeded
+  when: java_check_deb.rc == 1
+
+- name: Install java version {{ java_major_version }}'
+  apt:
+    deb: /tmp/download-java-zulu.deb
+  when: java_check_deb.rc == 1
+
+- name: Clean java-zulu deb file
+  file:
+    path: /tmp/download-java-zulu.deb
+    state: absent
+  when: java_check_deb.rc == 1

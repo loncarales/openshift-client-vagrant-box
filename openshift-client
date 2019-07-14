@@ -1,0 +1,10 @@
+#!/usr/bin/env ansible-playbook
+# playbook for OpenShift Client Vagrant Box
+---
+
+- name: 'Provision OpenShift Client Vagrant Box'
+  hosts: openshift-client
+
+# import playbooks 
+- import_playbook: playbooks/bootstrap.yml
+- import_playbook: playbooks/openshift-essentials.yml

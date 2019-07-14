@@ -1,0 +1,4 @@
+---
+
+# Install these roles from the Ansible Galaxy
+- src: robertdebock.bootstrap

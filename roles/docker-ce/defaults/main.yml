@@ -1,0 +1,5 @@
+---
+# defaults file for docker-ce
+
+docker_compose_version: '1.24.1'
+docker_options: []
