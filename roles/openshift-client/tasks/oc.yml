@@ -1,0 +1,44 @@
+---
+# tasks file for openshift-client
+
+- name: Check if oc is installed
+  command: /usr/local/bin/oc version
+  failed_when: false
+  changed_when: false
+  register: oc_check
+
+
+- name: Download, install and configure oc
+  block:
+    - name: Set up release url
+      set_fact:
+        release_url: >-
+          {{ vars['release_url_version_' + oc_version|string] }}
+
+    - name: Set up release folder
+      set_fact:
+        release_folder: >-
+          {{ vars['release_version_folder_' + oc_version|string] }}
+
+    - name: Ensure /opt/oc directory exists
+      file:
+        path: /opt/oc
+        state: directory
+      register: oc_directory
+
+    - name: 'Download oc binary from {{ release_url }} and extract it'
+      unarchive:
+        src: '{{ release_url }}'
+        dest: '{{ oc_directory.path }}'
+        remote_src: yes
+
+    - name: Create a symbolic link to /usr/local/bin/oc
+      file:
+        src: '{{ oc_directory.path }}/{{ release_folder }}/oc'
+        dest: /usr/local/bin/oc
+        state: link
+
+    - name: Test the oc command
+      shell: oc version
+
+  when: oc_check.rc != 0 or oc_check.failed|default(false)

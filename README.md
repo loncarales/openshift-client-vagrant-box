@@ -8,4 +8,14 @@ OpenShift Client Vagrant Box based on Debian 9 Stretch
 * [VirtualBox](https://www.virtualbox.org/)
 * [Vagrant](https://www.vagrantup.com/)
 
-## Installing
+## Create and configure machine according to Vagrantfile
+
+```bash
+vagrant up
+```
+
+## SSH into a running Vagrant machine
+
+```bash
+vagrant ssh
+```

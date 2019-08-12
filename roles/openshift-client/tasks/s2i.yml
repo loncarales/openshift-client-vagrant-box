@@ -1,0 +1,39 @@
+---
+# tasks file for s2i
+
+- name: Check if s2i is installed
+  command: /usr/local/bin/s2i version
+  failed_when: false
+  changed_when: false
+  register: s2i_check
+
+- name: Download, install and configure s2i
+  block:
+    - name: Ensure /tmp/s2i directory exists
+      file:
+        path: /tmp/s2i
+        state: directory
+      register: s2i_directory
+
+    - name: Download s2i binary and extract it
+      unarchive:
+        src: 'https://github.com/openshift/source-to-image/releases/download/v{{ s2i_version }}/source-to-image-v{{ s2i_version }}-{{ s2i_commit_hash }}-linux-amd64.tar.gz'
+        dest: '{{ s2i_directory.path }}'
+        remote_src: yes
+
+    - name: Copy s2i to /usr/local/bin folder
+      copy:
+        src: '{{ s2i_directory.path }}/s2i'
+        dest: /usr/local/bin/s2i
+        mode: '0755'
+        remote_src: yes
+
+    - name: Test the s2i command
+      shell: s2i version
+
+    - name: Clean /tmp/s2i directory
+      file:
+        path: /tmp/s2i
+        state: absent
+
+  when: s2i_check.rc != 0 or s2i_check.failed|default(false)
