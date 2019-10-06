@@ -9,8 +9,13 @@ release_version_folder_3.6: openshift-origin-client-tools-v3.6.1-008f2d5-linux-6
 release_url_version_3.9: https://github.com/openshift/origin/releases/download/v3.9.0/openshift-origin-client-tools-v3.9.0-191fece-linux-64bit.tar.gz
 release_version_folder_3.9: openshift-origin-client-tools-v3.9.0-191fece-linux-64bit
 
+release_url_version_3.10: https://github.com/openshift/origin/releases/download/v3.10.0/openshift-origin-client-tools-v3.10.0-dd10d17-linux-64bit.tar.gz
+release_version_folder_3.10: openshift-origin-client-tools-v3.10.0-dd10d17-linux-64bit
+
 release_url_version_3.11: https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz
 release_version_folder_3.11: openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit
+
+odo_release_url: https://github.com/openshift/odo/releases/latest/download/odo-linux-amd64.tar.gz
 
 s2i_version: 1.1.14
 s2i_commit_hash: 874754de

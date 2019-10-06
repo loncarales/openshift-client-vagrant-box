@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   # set auto_update to false, if you do NOT want to check the correct
   # additions version when booting this machine
   if Vagrant.has_plugin?("vagrant-vbguest")
-    config.vbguest.auto_update = true
+    config.vbguest.auto_update = false
   end
 
   # Vagrant Host Manager
@@ -39,8 +39,8 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "bento/debian-9.6"
-  config.vm.box_version = "201812.27.0"
+  config.vm.box = "bento/debian-9.9"
+  config.vm.box_version = "201907.07.0"
   # Don't check for box update
   config.vm.box_check_update = false
 
@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
     # Customize VirtualBox Provider
     h.vm.provider "virtualbox" do |vb|
       vb.name = "openshift-client"
-      vb.memory = 2048
+      vb.memory = 1024
     end
 
   end

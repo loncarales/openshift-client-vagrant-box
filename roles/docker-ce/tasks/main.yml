@@ -3,7 +3,7 @@
 
 - name: ensure docker dependencies are installed
   apt:
-    name: ['gnupg2', 'software-properties-common']
+    name: ['apt-transport-https', 'ca-certificates', 'curl', 'gnupg2', 'software-properties-common']
     state: present
   tags: [ 'packages', 'docker' ]
 
@@ -18,10 +18,11 @@
     repo: 'deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable'
     filename: docker
     state: present
+    update_cache: yes
 
 - name: install docker
   package:
-    name: docker-ce
+    name: ['docker-ce', 'docker-ce-cli', 'containerd.io']
     state: present
 
 - name: remove upstart config file

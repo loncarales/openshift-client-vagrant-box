@@ -41,4 +41,21 @@
     - name: Test the oc command
       shell: oc version
 
-  when: oc_check.rc != 0 or oc_check.failed|default(false)
+  when: 
+    - oc_check.rc != 0 or oc_check.failed|default(false)
+    - oc_version <= 3.11
+
+- name: Download, install and configure odo
+  block:
+    - name: 'Download odo binary from {{ odo_release_url }} and extract it'
+      unarchive:
+        src: '{{ odo_release_url }}'
+        dest: '/usr/local/bin'
+        mode: a+x
+        remote_src: yes
+    
+    - name: Test the odo command
+      shell: odo version
+
+  when: 
+    - oc_version >= 3.10
